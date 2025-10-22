@@ -20,4 +20,7 @@ jobs:
         pwd
         ls -l
         cd bitnami/redis/8.2/debian-12
-        echo 'docker build . --file Dockerfile --tag my-image-name:$(date +%s)'
+        ls -l
+        docker image ls
+        docker build -t vhv/gcp-redis:$SHORT_SHA -t vhv/gcp-redis:latest .
+        docker image ls
