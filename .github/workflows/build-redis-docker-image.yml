@@ -1,7 +1,7 @@
 name: Build Redis Docker image
 env:
-  REGISTRY_REPO: ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/e4m-repo
   REGION: asia
+  REGISTRY_REPO: ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/e4m-repo
 
 on:
   push:
