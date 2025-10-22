@@ -1,6 +1,7 @@
 name: Build Redis Docker image
 env:
   REGISTRY_REPO: vhv
+  REGION: asia
 
 on:
   push:
