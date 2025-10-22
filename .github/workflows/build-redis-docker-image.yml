@@ -1,7 +1,7 @@
 name: Build Redis Docker image
 env:
   REGION: asia
-  REGISTRY_REPO: ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/e4m-repo
+  REGISTRY_REPO: e4m-repo
 
 on:
   push:
@@ -36,10 +36,11 @@ jobs:
         cd bitnami/redis/8.2/debian-12
         ls -l
         docker image ls
-        docker build -t $REGISTRY_REPO:${GITHUB_SHA::7} -t $REGISTRY_REPO:latest .
+        docker build -t ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/$REGISTRY_REPO:${GITHUB_SHA::7} \
+        -t ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/$REGISTRY_REPO:latest .
         docker image ls
 
     - name: Push to Artifact Registry
       run: |
-        docker push $REGISTRY_REPO:${GITHUB_SHA::7}
-        docker push $REGISTRY_REPO:latest
+        docker push ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/$REGISTRY_REPO:${GITHUB_SHA::7}
+        docker push ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/$REGISTRY_REPO:latest
