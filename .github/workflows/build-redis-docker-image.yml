@@ -1,6 +1,6 @@
 name: Build Redis Docker image
 env:
-  REGISTRY_REPO: vhv
+  REGISTRY_REPO: ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/e4m-repo
   REGION: asia
 
 on:
@@ -38,3 +38,8 @@ jobs:
         docker image ls
         docker build -t $REGISTRY_REPO:${GITHUB_SHA::7} -t $REGISTRY_REPO:latest .
         docker image ls
+
+    - name: Push to Artifact Registry
+      run: |
+        docker push $REGISTRY_REPO:${GITHUB_SHA::7}
+        docker push $REGISTRY_REPO:latest
