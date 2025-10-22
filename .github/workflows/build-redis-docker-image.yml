@@ -1,4 +1,6 @@
 name: Build Redis Docker image
+env:
+  REGISTRY_REPO: vhv
 
 on:
   push:
@@ -22,5 +24,5 @@ jobs:
         cd bitnami/redis/8.2/debian-12
         ls -l
         docker image ls
-        docker build -t vhv/gcp-redis:$SHORT_SHA -t vhv/gcp-redis:latest .
+        docker build -t $REGISTRY_REPO:$SHORT_SHA -t $REGISTRY_REPO:latest .
         docker image ls
