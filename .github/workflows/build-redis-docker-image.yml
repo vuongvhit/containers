@@ -1,7 +1,7 @@
 name: Build Redis Docker image
 env:
-  REGION: asia
-  REGISTRY_REPO: e4m-repo
+  REGION: ${{ vars.REGION }}
+  REGISTRY_REPO: ${{ vars.REGISTRY_REPO }}
 
 on:
   push:
