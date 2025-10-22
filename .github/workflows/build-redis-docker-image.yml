@@ -30,17 +30,13 @@ jobs:
     - name: Configure Docker for Artifact Registry
       run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
 
+    - name: Verify Docker auth
+      run: docker login -u oauth2accesstoken -p "$(gcloud auth print-access-token)" https://${{ env.REGION }}-docker.pkg.dev
+
     - name: Build the Docker image
       run: |
-        docker version
-        pwd
-        ls -l
-        cd bitnami/redis/8.2/debian-12
-        ls -l
-        docker image ls
         docker build -t ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/$REGISTRY_REPO/$APP_NAME:${GITHUB_SHA::7} \
         -t ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/$REGISTRY_REPO/$APP_NAME:latest .
-        docker image ls
 
     - name: Push to Artifact Registry
       run: |
